@@ -47,7 +47,7 @@
           {
             var issues= [];
             data.forEach(function(ele) {
-              console.log(ele);
+              //console.log(ele);
               var openstatus;
               (ele.open) ? openstatus = 'open' : openstatus = 'closed';
               var single = [
@@ -82,6 +82,7 @@
         });
         
         $('#issueDisplay').on('click','.closeIssue', function(e) {
+          e.preventDefault();
           var url = "/api/issues/"+currentProject;
           $.ajax({
             type: "PUT",
@@ -89,14 +90,14 @@
             data: {_id: $(this).attr('id'), open: false},
             success: function(data) { alert(data); window.location.reload(true); }
           });
-          e.preventDefault();
+         
         });
         $('#issueDisplay').on('click','.deleteIssue', function(e) {
           var url = "/api/issues/"+currentProject;
           $.ajax({
             type: "DELETE",
             url: url,
-            data: {_id: $(this).attr('id')},
+            data: {_id: $(this).attr('id'), open: false},
             success: function(data) { alert(data); window.location.reload(true); }
           });
           e.preventDefault();
